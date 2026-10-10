@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+    content="width=device-width,initial-scale=1.0">
+    <title>Convertidor de temperatura</title>
+    <link rel="stylesheet" href="estilos_convertidor.css"/>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Convertidor de temperatura</h1>
+        <div class="converter-row">
+            <div class="col">
+                <label>Fahrenheit</label>
+                <input type="number" id="fahrenheit">
+            </div>
+
+            <div class="col">
+                <label>Celsius</label>
+                <input type="number" id="celsius">
+            </div>
+
+            <div class="col">
+                <label>Kelvin</label>
+                <input type="number" id="kelvin">
+            </div>
+        </div>
+
+        <button type="button" id="convertBtn">Convertir</button>
+    </div>
+
+    <script>
+        let celsius =
+            document.getElementById('celsius');
+        let fahrenheit =
+            document.getElementById('fahrenheit');
+        let kelvin =
+            document.getElementById('kelvin');
+        let convertBtn =
+            document.getElementById('convertBtn');
+
+        // Guarda cuál fue el último campo que el usuario editó
+        let lastEdited = null;
+
+        // Al escribir solo se registra el campo; NO se convierte todavía
+        celsius.oninput = function () {
+            lastEdited = celsius;
+        }
+        fahrenheit.oninput = function () {
+            lastEdited = fahrenheit;
+        }
+        kelvin.oninput = function () {
+            lastEdited = kelvin;
+        }
+
+        convertBtn.onclick = function () {
+            let source = lastEdited;
+
+            if (!source || source.value === '') {
+                source = [celsius, fahrenheit, kelvin]
+                    .find(function (input) {
+                        return input.value !== '';
+                    });
+            }
+
+            if (!source) {
+                return;
+            }
+
+            let value = parseFloat(source.value);
+
+            if (source === celsius) {
+                let f = (value * 9) / 5 + 32;
+                fahrenheit.value = parseFloat(f.toFixed(2));
+
+                let k = value + 273.15;
+                kelvin.value = parseFloat(k.toFixed(2));
+            } else if (source === fahrenheit) {
+                let c = ((value - 32) * 5) / 9;
+                celsius.value = parseFloat(c.toFixed(2));
+
+                let k = (value - 32) * 5 / 9 + 273.15;
+                kelvin.value = parseFloat(k.toFixed(2));
+            } else if (source === kelvin) {
+                let f = (value - 273.15) * 9 / 5 + 32;
+                fahrenheit.value = parseFloat(f.toFixed(2));
+
+                let c = value - 273.15;
+                celsius.value = parseFloat(c.toFixed(2));
+            }
+        }
+    </script>
+</body>
+
+</html>
