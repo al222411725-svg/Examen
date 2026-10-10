@@ -1,0 +1,87 @@
+
+body {
+  margin: 0; /*elimina el margen por defecto del navegador*/
+  padding: 0; /*elimina el relleno por defecto*/
+  height: 100vh; /*ocupa el 100% de la altura visible del navegador*/
+  
+  /*color del fondo*/
+  background: linear-gradient(to bottom, #ba3d3d, #333333);
+  
+  overflow: hidden; /*oculta cualquier contenido que se desborde del body*/
+  font-family: 'courier new'; /*fuente del texto*/
+  
+  color: #f4e087; /*color de texto*/
+}
+
+/*contenedor del contenido principal*/
+.contenido {
+  position: relative; /*sirve para que los elementos dentro de este se puedan mover en relacion a este contenedor*/
+  z-index: 2; /*asegura que este por encima del fondo y las luciernagas*/
+  text-align: center; /*centra el texto y los elementos*/
+  padding-top: 10%; /*espacio superior desde el borde de la ventana*/
+}
+
+/*estilo general para los inputs y botones*/
+input, button {
+  font-size: 1.1rem; /*tamaño del texto*/
+  padding: 0.5rem; /*espaciado interno*/
+  margin: 0.5rem; /*espaciado externo*/
+  border-radius: 5px; /*bordes redondeados*/
+  border: none; /*sin borde visible*/
+}
+
+/*color y estilo del boton "calcular edad"*/
+button {
+  background-color: #000000; /*color de fondo del boton*/
+  color: white; /*color del texto del boton*/
+  cursor: pointer; /*cambia el cursor a una mano al pasar sobre el*/
+}
+
+/*estilo del resultado mostrado*/
+#resultado {
+  margin-top: 1rem; /*espacio arriba del resultado*/
+  font-weight: bold; /*texto en negrita*/
+}
+
+/*contenedor de las luciernagas*/
+.fireflies-container {
+  position: fixed; /*se queda fijo en la pantalla aunque se haga scroll*/
+  top: 0; /*pone el contenedor pegado al borde de arriba de la pantalla*/
+  left: 0; /*pone el contenedor pegado al borde izquierdo de la pantalla*/
+  width: 100%; /*ocupa todo el ancho*/
+  height: 100%; /*ocupa toda la altura*/
+  pointer-events: none; /*no interfiere con clics o interacciones*/
+  z-index: 1; /*este numero indica el "nivel" de apilado.. mientras mas alto, mas arriba se ve*/
+}
+
+/*crea multiples luciernagas con sombras en distintas posiciones*/
+.fireflies-container::before,
+.fireflies-container::after {
+  content: ''; /*elemento vacio para usarlo solo con CSS*/
+  position: absolute; /*posiciona este elemento dentro del contenedor sin afectar el flujo normal*/
+  width: 3px; /*ancho de cada luciernaga*/
+  height: 3px; /*alto de cada luciernaga*/
+  background: rgb(225, 154, 0); /*color de las luciernagas*/
+  border-radius: 50%; /*forma circular*/
+  box-shadow: /*multiples sombras para simular muchas luciernagas*/
+    50vw 20vh 3px rgb(250, 198, 76),
+    20vw 70vh 4px yellow,
+    80vw 60vh 2px yellow,
+    60vw 30vh 5px rgb(82, 224, 163),
+    30vw 90vh 2px rgb(221, 96, 223),
+    90vw 10vh 3px rgb(222, 102, 224),
+    70vw 80vh 4px rgb(196, 98, 152);
+  animation: firefly 10s infinite alternate ease-in-out; /*animacion*/
+}
+
+/*animación de movimiento de las luciernagas*/
+@keyframes firefly {
+  0% {
+    transform: translate(0, 0) scale(1); /*estado inicial: sin movimiento*/
+    opacity: 1.2; /*poco visible*/
+  }
+  100% {
+    transform: translate(10px, -10px) scale(1.5); /*se mueve y crece*/
+    opacity: 1; /*mas visible */
+  }
+}
